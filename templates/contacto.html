@@ -4,9 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hola</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 </head>
 <body>
-    <h3>hola desde del server</h3>
-    <p>hola bebe ya que contigo no sirve </p>
+    
+    <div class="container">
+
+        <div class="row">   <!-- de 6 espacios -->
+            <div class="col col-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="card bg">
+                    <div class="card-header bg-info">Informacion del Cliente</div>
+                    <h5>Nombres</h5>
+                    <input type="text" class="form-control" placeholder="pon tu nombre" id="txtName">
+                    <br>
+                    <h5>Email</h5>
+                    <input type="text" class="form-control" placeholder="pon tu nombre" id="txtEmail">
+                    <br>
+                    <h5>N°. Telefono</h5>
+                    <input type="text" class="form-control" placeholder="pon tu nombre" id="txtTelefono">
+                    <br>
+                    <h5>Direccion</h5>
+                    <input type="text" class="form-control" placeholder="pon tu nombre" id="txtDireccion">
+                    <br>
+                </div>
+            </div>
+                                <!-- de 6 espacios -->
+            <div class="col col-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="card bg">
+                    <div class="card-header bg-info">Informacion de la mascota</div>
+                    <h5>Nombre de mascota</h5>
+                    <input type="text" class="form-control" placeholder="pon tu nombre" id="txtNamemascota">
+                    <br>
+                    <h5>Tipo de mascota</h5>
+                    <input type="text" class="form-control" placeholder="pon tu nombre" id="txtTipoMascota">
+                    <br>
+                    <h5>Raza</h5>
+                    <input type="text" class="form-control" placeholder="pon tu nombre" id="txtRaza">
+                    <br>
+                    <h5>Edad</h5>
+                    <input type="text" class="form-control" placeholder="pon tu nombre" id="txtEdad">
+                    <br>
+                </div> 
+            </div>
+            <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+            <button type="button" class="btn btn-primary" id="btnLimpiar">Limpiar</button>           
+        </div>    
+    </div>
+
+
+    <script src="{{ url_for('static', filename='js/jquery.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
 </body>
 </html>
