@@ -13,5 +13,5 @@ class Conexion:
             retorna la instancia de la base de datos
 
         """
-    def getConexión(self):
+    def getConexion(self):
         return self.con
