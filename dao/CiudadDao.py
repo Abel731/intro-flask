@@ -1,6 +1,6 @@
 # Data access object - DAO
-
-from conexión.Conexión import Conexion
+from flask import current_app as app
+from conexion.Conexion import Conexion
 
 class CiudadDao:
 
@@ -13,14 +13,14 @@ class CiudadDao:
 
         # objeto conexion
         conexion = Conexion()
-        con = conexion.getConexión()
+        con = conexion.getConexion()
         cur = con.cursor()
         try:
             cur.execute(ciudadSQL)
             lista_ciudades = cur.fetchall()
             return lista_ciudades
         except con.Error as e:
-            print(e)
+             app.logger.info(e)
         finally:
             cur.close()
             con.close()
@@ -41,7 +41,7 @@ class CiudadDao:
             return True
 
         except con.Error as e:
-            print(e)
+            app.logger.info(e)
 
         finally:
             cur.close()
