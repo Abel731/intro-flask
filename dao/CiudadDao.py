@@ -25,6 +25,33 @@ class CiudadDao:
             cur.close()
             con.close()
 
+
+    def getCiudadById(self, id):
+
+        ciudadSQL = """
+        SELECT id, descripcion
+        FROM ciudades WHERE id=%s
+        """
+        # objeto conexion
+        conexion = Conexion()
+        con = conexion.getConexion()
+        cur = con.cursor()
+        try:
+            cur.execute(ciudadSQL, (id,))
+            # trae datos de la bd
+            ciudadEncontrada = cur.fetchone()
+            # retorno los datos
+            return {
+                    "id": ciudadEncontrada[0],
+                    "descripcion": ciudadEncontrada[1]
+                }
+        except con.Error as e:
+            app.logger.info(e)
+        finally:
+            cur.close()
+            con.close()
+
+
     def guardarCiudad(self, descripcion):   
         insertCiudadSQL = """
         INSERT INTO ciudades(descripcion) VALUES(%s)

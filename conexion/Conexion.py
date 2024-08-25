@@ -6,7 +6,7 @@ class Conexion:
     """
 
     def __init__(self):
-        self.con = psycopg2.connect("dbname=veterinaria-db host=localhosts user=postgres password=123")
+        self.con = psycopg2.connect("dbname=veterinaria-db host=localhost user=postgres password=123")
 
         """getConexión
 
