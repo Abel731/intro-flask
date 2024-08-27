@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for,flash
 from dao.CiudadDao import CiudadDao
+from dao.PaisDao import PaisDao
 
 app = Flask(__name__)
 
@@ -75,13 +76,67 @@ def ciudadesEliminar(id):
     ciudaddao.deleteCiudad(id)
     return redirect(url_for('ciudades_index'))
 
-
 @app.route('/guardar-mascota', methods=['POST'])
 def guardarMascota():
     print(request.form)
     nombreMascota = request.form.get('txtNombreMascota')
     return f"Ya llego tu mascota <strong>{nombreMascota}</strong> al servidor"
 
+@app.route('/paises-index')
+def paises_index():
+    # Creacion de la instancia de ciudaddao
+    paisDao = PaisDao()
+    lista_paises = paisDao.getPaises()
+    return render_template('paises-index.html', lista_paises=lista_paises)
+
+@app.route('/paises')
+def paises():
+    return render_template('paises.html')
+
+@app.route('/guardar-pais', methods=['POST'])
+def guardarPais():
+    pais = request.form.get('txtDescripcion').strip()
+    if pais == None or len(pais) < 1:
+        # mostrar un mensaje al usuario
+        flash('Debe escribir algo en la descripcion', 'warning')
+
+        # redireccionar a la vista ciudades
+        return redirect(url_for('paises'))
+
+    paisDao = PaisDao()
+    paisDao.guardarPais(pais.upper())
+
+    # mostrar un mensaje al usuario
+    flash('Guardado exitoso', 'success')
+
+    # redireccionar a la vista ciudades
+    return redirect(url_for('paises_index'))
+
+@app.route('/paises-editar/<id>')
+def paisesEditar(id):
+    paisdao = PaisDao()
+    return render_template('paises-editar.html', pais=paisdao.getPaisById(id))
+
+@app.route('/actualizar-pais', methods=['POST'])
+def actualizarPais():
+    id = request.form.get('txtIdPais')
+    descripcion = request.form.get('txtDescripcion').strip()
+
+    if descripcion == None or len(descripcion) == 0:
+        flash('No debe estar vacia la descripcion')
+        return redirect(url_for('paisesEditar', id=id))
+
+    # actualizar
+    paisdao = PaisDao()
+    paisdao.updatePais(id, descripcion.upper())
+
+    return redirect(url_for('paises_index'))
+
+@app.route('/paises-eliminar/<id>')
+def paisesEliminar(id):
+    paisdao = PaisDao()
+    paisdao.deletePais(id)
+    return redirect(url_for('paises_index'))
 
 # se pregunta por el proceso principal
 if __name__=='__main__':
