@@ -18,7 +18,7 @@ class CiudadDao:
         try:
             cur.execute(ciudadSQL)
             lista_ciudades = cur.fetchall()
-            return lista_ciudades
+            return [ { "id": item[0], "descripcion": item[1] } for item in lista_ciudades]
         except con.Error as e:
              app.logger.info(e)
         finally:
@@ -73,4 +73,66 @@ class CiudadDao:
         finally:
             cur.close()
             con.close()
+            return False
+        
+    def updateCiudad(self, id, descripcion):
+
+            updateCiudadSQL = """
+            UPDATE ciudades
+            SET descripcion=%s
+            WHERE id=%s
+            """
+
+            conexion = Conexion()
+            con = conexion.getConexion()
+            cur = con.cursor()
+
+            # Ejecucion exitosa
+            try:
+                cur.execute(updateCiudadSQL, (descripcion, id,))
+                # se confirma la insercion
+                con.commit()
+
+                return True
+
+            # Si algo fallo entra aqui
+            except con.Error as e:
+                app.logger.info(e)
+
+            # Siempre se va ejecutar
+            finally:
+                cur.close()
+                con.close()
+
+            return False
+
+
+    def deleteCiudad(self, id):
+
+            updateCiudadSQL = """
+            DELETE FROM ciudades
+            WHERE id=%s
+            """
+
+            conexion = Conexion()
+            con = conexion.getConexion()
+            cur = con.cursor()
+
+            # Ejecucion exitosa
+            try:
+                cur.execute(updateCiudadSQL, (id,))
+                # se confirma la insercion
+                con.commit()
+
+                return True
+
+            # Si algo fallo entra aqui
+            except con.Error as e:
+                app.logger.info(e)
+
+            # Siempre se va ejecutar
+            finally:
+                cur.close()
+                con.close()
+
             return False
